@@ -1,11 +1,12 @@
+/** Component to recieve user input once an expression is dropped */
 import React, { Component } from 'react'
 
 class ExecuteFunction extends Component {
+  /** If function was composed, reload user's previous arguments
+   * @todo Make arguments list visible without creating a new instance each time*/
   constructor(props){
     super(props);
     this.state = {};
-    console.log('reloading!!!!' + this.props.preloadedArgs);
-    console.log(this.state.preloadedArgs);
     if (this.props.preloadedArgs) {
       this.state.args = this.props.preloadedArgs;
     } else {
@@ -13,6 +14,7 @@ class ExecuteFunction extends Component {
     }
   }
 
+  /** Store user input in state */
   handleChange = (e) => {
     console.log(e.target.value);
     let newArgs = this.state.args
@@ -21,15 +23,11 @@ class ExecuteFunction extends Component {
     this.setState({
       args: newArgs,
     });
-    //console.log(newArgs.includes(undefined));
   }
 
+  /** Display result of function in results box or display in arguments for of previously composed function upon submit */
   handleSubmit = (e) => {
     e.preventDefault();
-    /** Ensure that you have the correct number of arguments. Is this the right way to do it? */
-    //Check that expressionsStack is empty
-    console.log(this.props.stackEmpty);
-
     if (!this.state.args.includes(undefined) && this.props.stackEmpty) {
       let val = this.props.function(...this.state.args);
       console.log(val);
@@ -45,14 +43,13 @@ class ExecuteFunction extends Component {
         args: [],
       });
     }
-
-
   }
 
   onDragOver = (e) => {
     e.preventDefault();
   }
 
+  /** compose function when dropped in input box */
   onDrop = (e, argId) => {
     let expressionId = e.dataTransfer.getData("id");
     console.log('drop 2: ' + expressionId);
@@ -69,7 +66,6 @@ class ExecuteFunction extends Component {
                 return <div key={i}>
                   <label htmlFor={i}>Argument {+ i}: </label>
                   <input type="text" id={i} onChange={this.handleChange} onDragOver={(e) =>this.onDragOver(e)}  onDrop={(e, id)=>this.onDrop(e, i)}
-                         // value={this.props.preloadedArgs != null ? this.props.preloadedArgs[i] : undefined}/>
                          value={this.state.args[i] || ""} />
                 </div>
                 }

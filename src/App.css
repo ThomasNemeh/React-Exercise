@@ -39,13 +39,6 @@
 .input-box {
   position: relative;
   left: 2vw;
-  /*
-  margin: auto;
-  color: rgba(255, 255, 255, 0.8);
-  background: rgba(60, 60, 60, 0.8);
-  border: 5px solid rgba(35, 35, 35, 0.7);
-  border-radius: 14px;
-  */
   border-radius: 5px;
 }
 

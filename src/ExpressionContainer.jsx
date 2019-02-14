@@ -27,7 +27,7 @@ class ExpressionContainer extends React.Component {
   onDrop = (e) => {
     let id = e.dataTransfer.getData("id");
     console.log('drop recorded: ' + id);
-    let icon = <Icon className="Icon" name={null} id={id}/>;
+    let icon = <Icon key={Math.random()} className="Icon" name={null} id={id}/>;
     if (this.state.expressionsStack.length === 0) {
       this.setState({
         visibleId: id,
@@ -55,7 +55,7 @@ class ExpressionContainer extends React.Component {
       pos: oldArgId,
       args: oldArgs,
     };
-    let icon = <Icon className="Icon" name={null} id={newExpressionId}/>;
+    let icon = <Icon key={Math.random()} className="Icon" name={null} id={newExpressionId}/>;
     this.setState({
       visibleId: newExpressionId,
       expressionsStack: [...this.state.expressionsStack, memory],
@@ -70,7 +70,6 @@ class ExpressionContainer extends React.Component {
     let waitingExpressions = this.state.pending;
     waitingExpressions.shift();
     prev.args[prev.pos]=val;
-    console.log('pay attention to this!' + prev.args);
     this.setState({
       expressionsStack: stack,
       visibleId: prev.id,
@@ -80,6 +79,8 @@ class ExpressionContainer extends React.Component {
   }
 
   render() {
+    /** Generate icon and arguments form for each member of input list.
+     * @todo Make arguments list visible without creating a new instance each time */
     let allFunctions = [];
     this.props.runThese.forEach((t, i) => {
       allFunctions.push(
@@ -88,13 +89,14 @@ class ExpressionContainer extends React.Component {
           <Icon className="Icon" name={t.name} id={i}/>
         </div>
         <div className="form-div">
-          <ExecuteFunction className="arguments-form" key={Math.random()}id = {i} function={t} length={t.length} visible={this.state.visibleId} display={this.display}
+          <ExecuteFunction className="arguments-form" key={Math.random()} id = {i} function={t} length={t.length} visible={this.state.visibleId} display={this.display}
           stackEmpty={this.state.expressionsStack.length > 0 ? false : true} compose={this.compose} loadPrevExpression={this.loadPrevExpression}
           preloadedArgs={this.state.preloadedArgs}/>
         </div>
       </div>);
     });
 
+    /* Generate layout of app */
     return (
       <div className="expression-container">
         <h2 className="header">Expression Area</h2>

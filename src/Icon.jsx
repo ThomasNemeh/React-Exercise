@@ -16,8 +16,8 @@ const Button = styled.button`
 `
 
 const Icon = props => {
+  /** If on lefthand side, display caption. No caption if icon is on righthand side */
   let caption;
-
   if (props.name != null) {
     caption = <figcaption className="icon-caption">{props.name + '()'}</figcaption>;
   }
