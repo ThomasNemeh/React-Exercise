@@ -14,11 +14,15 @@ class ExecuteFunction extends Component {
     }
   }
 
+  state = {
+    args: [],
+  }
+
   /** Store user input in state */
   handleChange = (e) => {
     console.log(e.target.value);
-    let newArgs = this.state.args
-    newArgs[e.target.id] = e.target.value
+    let newArgs = this.state.args;
+    newArgs[e.target.id] = e.target.value;
     console.log(newArgs);
     this.setState({
       args: newArgs,
@@ -32,16 +36,10 @@ class ExecuteFunction extends Component {
       let val = this.props.function(...this.state.args);
       console.log(val);
       this.props.display(val);
-      this.setState({
-        args: [],
-      });
     }
     else if (!this.state.args.includes(undefined)) {
       let val = this.props.function(...this.state.args);
       this.props.loadPrevExpression(val);
-      this.setState({
-        args: [],
-      });
     }
   }
 

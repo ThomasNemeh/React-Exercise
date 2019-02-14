@@ -38,6 +38,7 @@ class ExpressionContainer extends React.Component {
 
   /** display result of function */
   display = (val) => {
+    console.log("display!");
     this.setState({
       visibleId: -1,
       displayResult: val,
@@ -67,14 +68,12 @@ class ExpressionContainer extends React.Component {
   loadPrevExpression = (val) => {
     let stack = this.state.expressionsStack;
     let prev = stack.pop();
-    let waitingExpressions = this.state.pending;
-    waitingExpressions.shift();
     prev.args[prev.pos]=val;
     this.setState({
       expressionsStack: stack,
       visibleId: prev.id,
       preloadedArgs: prev.args,
-      pending: [waitingExpressions],
+      pending: this.state.pending.filter((x,i) => i != 0),
     });
   }
 
