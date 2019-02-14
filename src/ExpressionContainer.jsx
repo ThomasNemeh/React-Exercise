@@ -28,7 +28,7 @@ class ExpressionContainer extends React.Component {
     let id = e.dataTransfer.getData("id");
     console.log('drop recorded: ' + id);
     let icon = <Icon key={Math.random()} className="Icon" name={null} id={id}/>;
-    if (this.state.expressionsStack.length === 0) {
+    if (this.state.expressionsStack.length === 0 && this.state.visibleId == -1) {
       this.setState({
         visibleId: id,
         pending: [icon, ...this.state.pending],
